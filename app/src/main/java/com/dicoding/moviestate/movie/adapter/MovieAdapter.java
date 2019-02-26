@@ -74,7 +74,13 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
                 Picasso.get().load(item.getPosterPath()).transform(new BlurTransformation(itemView.getContext(), 20)).into(ivBackdrop);
             }
 
-            tvTitle.setText(checkTextIfNull(item.getTitle()));
+            String title = checkTextIfNull(item.getTitle());
+            if (title.length() > 30) {
+                tvTitle.setText(String.format("%s...", title.substring(0, 29)));
+            } else {
+                tvTitle.setText(checkTextIfNull(item.getTitle()));
+            }
+
             tvDateRelease.setText(checkTextIfNull(item.getReleaseDate()));
             tvVote.setText(checkTextIfNull("" + item.getVoteAverage()));
         }
