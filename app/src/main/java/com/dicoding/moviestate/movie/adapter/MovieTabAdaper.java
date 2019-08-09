@@ -5,8 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.dicoding.moviestate.movie.MovieNowPlayingFragment;
-import com.dicoding.moviestate.movie.MovieUpComingFragment;
+import com.dicoding.moviestate.movie.nowplaying.MovieNowPlayingFragment;
+import com.dicoding.moviestate.movie.upcoming.MovieUpComingFragment;
 
 public class MovieTabAdaper extends FragmentPagerAdapter {
 

@@ -12,9 +12,8 @@ import android.view.MenuItem;
 import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseAppCompatActivity;
 import com.dicoding.moviestate.movie.MovieHomeFragment;
-import com.dicoding.moviestate.movie.MovieNowPlayingFragment;
-import com.dicoding.moviestate.movie.MoviePopularMovie;
-import com.dicoding.moviestate.movie.MovieTopRatedFragment;
+import com.dicoding.moviestate.movie.popular.MoviePopularMovie;
+import com.dicoding.moviestate.movie.toprated.MovieTopRatedFragment;
 
 public class MainActivity extends BaseAppCompatActivity {
 

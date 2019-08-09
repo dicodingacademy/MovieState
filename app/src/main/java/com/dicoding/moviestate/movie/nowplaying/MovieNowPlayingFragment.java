@@ -1,5 +1,4 @@
-package com.dicoding.moviestate.movie;
-
+package com.dicoding.moviestate.movie.nowplaying;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,13 +24,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviePopularMovie extends BaseFragment implements MovieDataSourcesCallback {
+public class MovieNowPlayingFragment extends BaseFragment implements MovieDataSourcesCallback {
 
     private ArrayList<MovieItem> movies = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
-    public MoviePopularMovie() {
-        // Required empty public constructor
+    public MovieNowPlayingFragment() {
     }
 
     @Override
@@ -52,7 +50,7 @@ public class MoviePopularMovie extends BaseFragment implements MovieDataSourcesC
         movieList.setAdapter(movieAdapter);
 
         if (savedInstanceState == null) {
-            getMovieDataSources().getMovies(MovieDataSources.URL_POPULAR, this);
+            getMovieDataSources().getMovies(MovieDataSources.URL_NOW_PLAYING, this);
         } else {
             movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
             movieAdapter.refill(movies);
@@ -75,5 +73,4 @@ public class MoviePopularMovie extends BaseFragment implements MovieDataSourcesC
         outState.putParcelableArrayList(KEY_MOVIES, movies);
         super.onSaveInstanceState(outState);
     }
-
 }

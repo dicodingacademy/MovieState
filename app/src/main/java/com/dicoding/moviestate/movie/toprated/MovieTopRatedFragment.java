@@ -1,5 +1,4 @@
-package com.dicoding.moviestate.movie;
-
+package com.dicoding.moviestate.movie.toprated;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,18 +21,17 @@ import com.dicoding.moviestate.network.MovieDataSourcesCallback;
 
 import java.util.ArrayList;
 
+
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieUpComingFragment extends BaseFragment implements MovieDataSourcesCallback {
+public class MovieTopRatedFragment extends BaseFragment implements MovieDataSourcesCallback {
 
     private ArrayList<MovieItem> movies = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
-    public MovieUpComingFragment() {
-        // Required empty public constructor
+    public MovieTopRatedFragment() {
     }
-
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
@@ -53,7 +51,7 @@ public class MovieUpComingFragment extends BaseFragment implements MovieDataSour
         movieList.setAdapter(movieAdapter);
 
         if (savedInstanceState == null) {
-            getMovieDataSources().getMovies(MovieDataSources.URL_UP_COMING, this);
+            getMovieDataSources().getMovies(MovieDataSources.URL_TOP_RATED, this);
         } else {
             movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
             movieAdapter.refill(movies);
