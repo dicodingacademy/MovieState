@@ -13,6 +13,7 @@ import com.dicoding.moviestate.entity.MovieItem;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import jp.wasabeef.picasso.transformations.BlurTransformation;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
@@ -25,7 +26,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MovieHolder>
         this.items = items;
     }
 
-    public void refill(ArrayList<MovieItem> items) {
+    public void refill(List<MovieItem> items) {
         this.items = new ArrayList<>();
         this.items.addAll(items);
 
