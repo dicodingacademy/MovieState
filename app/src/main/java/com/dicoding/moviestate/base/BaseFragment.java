@@ -11,15 +11,9 @@ import com.dicoding.moviestate.network.MovieDataSources;
 
 public abstract class BaseFragment<T extends ViewModel> extends Fragment {
 
-    public static final String KEY_MOVIES = "movies";
-
     public T movieViewModel;
 
     public abstract Class<T> provideViewModelClass();
-
-    public MovieDataSources getMovieDataSources() {
-        return new MovieDataSources();
-    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
