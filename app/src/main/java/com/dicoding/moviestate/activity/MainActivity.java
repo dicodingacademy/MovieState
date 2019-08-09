@@ -12,7 +12,7 @@ import android.view.MenuItem;
 import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseAppCompatActivity;
 import com.dicoding.moviestate.movie.MovieHomeFragment;
-import com.dicoding.moviestate.movie.popular.MoviePopularMovie;
+import com.dicoding.moviestate.movie.popular.MoviePopularMovieFragment;
 import com.dicoding.moviestate.movie.toprated.MovieTopRatedFragment;
 
 public class MainActivity extends BaseAppCompatActivity {
@@ -43,7 +43,7 @@ public class MainActivity extends BaseAppCompatActivity {
                         title = "Home";
                         break;
                     case R.id.menu_popular:
-                        pageContent = new MoviePopularMovie();
+                        pageContent = new MoviePopularMovieFragment();
                         title = "Popular";
                         break;
                     case R.id.menu_top_rated:

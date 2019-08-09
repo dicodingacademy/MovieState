@@ -1,6 +1,7 @@
 package com.dicoding.moviestate.movie.popular;
 
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,16 +22,16 @@ import com.dicoding.moviestate.network.MovieDataSources;
 import com.dicoding.moviestate.network.MovieDataSourcesCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviePopularMovie extends BaseFragment implements MovieDataSourcesCallback {
+public class MoviePopularMovieFragment extends BaseFragment<MoviePopularViewModel> {
 
-    private ArrayList<MovieItem> movies = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
-    public MoviePopularMovie() {
+    public MoviePopularMovieFragment() {
         // Required empty public constructor
     }
 
@@ -44,36 +45,26 @@ public class MoviePopularMovie extends BaseFragment implements MovieDataSourcesC
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        movieAdapter = new MovieAdapter(movies);
+        movieAdapter = new MovieAdapter(new ArrayList<MovieItem>());
 
         RecyclerView movieList = view.findViewById(R.id.movie_list);
         movieList.setHasFixedSize(true);
         movieList.setLayoutManager(new LinearLayoutManager(getContext()));
         movieList.setAdapter(movieAdapter);
 
-        if (savedInstanceState == null) {
-            getMovieDataSources().getMovies(MovieDataSources.URL_POPULAR, this);
-        } else {
-            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
-            movieAdapter.refill(movies);
+        movieViewModel.observeMovie.observe(this, movieObservable);
+        movieViewModel.getMovieByUrl(MovieDataSources.URL_POPULAR);
+    }
+
+    Observer<List<MovieItem>> movieObservable = new Observer<List<MovieItem>>() {
+        @Override
+        public void onChanged(@Nullable List<MovieItem> movieItems) {
+            movieAdapter.refill(movieItems);
         }
-    }
+    };
 
     @Override
-    public void onSuccess(MovieResponse movieResponse) {
-        movies = movieResponse.getResults();
-        movieAdapter.refill(movies);
+    public Class<MoviePopularViewModel> provideViewModelClass() {
+        return MoviePopularViewModel.class;
     }
-
-    @Override
-    public void onFailed(String error) {
-        Toast.makeText(getContext() , error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(KEY_MOVIES, movies);
-        super.onSaveInstanceState(outState);
-    }
-
 }

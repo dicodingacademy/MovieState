@@ -1,5 +1,6 @@
 package com.dicoding.moviestate.movie.toprated;
 
+import android.arch.lifecycle.Observer;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,25 +10,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseFragment;
 import com.dicoding.moviestate.entity.MovieItem;
-import com.dicoding.moviestate.entity.MovieResponse;
 import com.dicoding.moviestate.movie.adapter.MovieAdapter;
 import com.dicoding.moviestate.network.MovieDataSources;
-import com.dicoding.moviestate.network.MovieDataSourcesCallback;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieTopRatedFragment extends BaseFragment implements MovieDataSourcesCallback {
+public class MovieTopRatedFragment extends BaseFragment<MovieTopRatedViewModel> {
 
-    private ArrayList<MovieItem> movies = new ArrayList<>();
     private MovieAdapter movieAdapter;
 
     public MovieTopRatedFragment() {
@@ -43,36 +41,26 @@ public class MovieTopRatedFragment extends BaseFragment implements MovieDataSour
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        movieAdapter = new MovieAdapter(movies);
+        movieAdapter = new MovieAdapter(new ArrayList<MovieItem>());
 
         RecyclerView movieList = view.findViewById(R.id.movie_list);
         movieList.setHasFixedSize(true);
         movieList.setLayoutManager(new LinearLayoutManager(getContext()));
         movieList.setAdapter(movieAdapter);
 
-        if (savedInstanceState == null) {
-            getMovieDataSources().getMovies(MovieDataSources.URL_TOP_RATED, this);
-        } else {
-            movies = savedInstanceState.getParcelableArrayList(KEY_MOVIES);
-            movieAdapter.refill(movies);
+        movieViewModel.observeMovie.observe(this, movieObservable);
+        movieViewModel.getMovieByUrl(MovieDataSources.URL_TOP_RATED);
+    }
+
+    Observer<List<MovieItem>> movieObservable = new Observer<List<MovieItem>>() {
+        @Override
+        public void onChanged(@Nullable List<MovieItem> movieItems) {
+            movieAdapter.refill(movieItems);
         }
-    }
+    };
 
     @Override
-    public void onSuccess(MovieResponse movieResponse) {
-        movies = movieResponse.getResults();
-        movieAdapter.refill(movies);
+    public Class<MovieTopRatedViewModel> provideViewModelClass() {
+        return MovieTopRatedViewModel.class;
     }
-
-    @Override
-    public void onFailed(String error) {
-        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        outState.putParcelableArrayList(KEY_MOVIES, movies);
-        super.onSaveInstanceState(outState);
-    }
-
 }
