@@ -13,6 +13,8 @@ import android.view.ViewGroup;
 
 import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseFragment;
+import com.dicoding.moviestate.base.BaseMovieViewModel;
+import com.dicoding.moviestate.entity.Screen;
 import com.dicoding.moviestate.entity.MovieItem;
 import com.dicoding.moviestate.movie.adapter.MovieAdapter;
 import com.dicoding.moviestate.network.MovieDataSources;
@@ -23,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieNowPlayingFragment extends BaseFragment<MovieNowPlayingViewModel> {
+public class MovieNowPlayingFragment extends BaseFragment {
 
     private MovieAdapter movieAdapter;
 
@@ -48,7 +50,6 @@ public class MovieNowPlayingFragment extends BaseFragment<MovieNowPlayingViewMod
         movieList.setAdapter(movieAdapter);
 
         movieViewModel.observeMovie.observe(this, movieObservable);
-        movieViewModel.getMovieByUrl(MovieDataSources.URL_NOW_PLAYING);
     }
 
     Observer<List<MovieItem>> movieObservable = new Observer<List<MovieItem>>() {
@@ -59,7 +60,7 @@ public class MovieNowPlayingFragment extends BaseFragment<MovieNowPlayingViewMod
     };
 
     @Override
-    public Class<MovieNowPlayingViewModel> provideViewModelClass() {
-        return MovieNowPlayingViewModel.class;
+    public Screen provideScreen() {
+        return Screen.NOW_PLAYING;
     }
 }

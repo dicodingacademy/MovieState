@@ -17,6 +17,7 @@ import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseFragment;
 import com.dicoding.moviestate.entity.MovieItem;
 import com.dicoding.moviestate.entity.MovieResponse;
+import com.dicoding.moviestate.entity.Screen;
 import com.dicoding.moviestate.movie.adapter.MovieAdapter;
 import com.dicoding.moviestate.network.MovieDataSources;
 import com.dicoding.moviestate.network.MovieDataSourcesCallback;
@@ -27,7 +28,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MoviePopularMovieFragment extends BaseFragment<MoviePopularViewModel> {
+public class MoviePopularMovieFragment extends BaseFragment {
 
     private MovieAdapter movieAdapter;
 
@@ -53,7 +54,6 @@ public class MoviePopularMovieFragment extends BaseFragment<MoviePopularViewMode
         movieList.setAdapter(movieAdapter);
 
         movieViewModel.observeMovie.observe(this, movieObservable);
-        movieViewModel.getMovieByUrl(MovieDataSources.URL_POPULAR);
     }
 
     Observer<List<MovieItem>> movieObservable = new Observer<List<MovieItem>>() {
@@ -64,7 +64,7 @@ public class MoviePopularMovieFragment extends BaseFragment<MoviePopularViewMode
     };
 
     @Override
-    public Class<MoviePopularViewModel> provideViewModelClass() {
-        return MoviePopularViewModel.class;
+    public Screen provideScreen() {
+        return Screen.POPULAR;
     }
 }

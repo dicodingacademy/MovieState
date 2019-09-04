@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 import com.dicoding.moviestate.R;
 import com.dicoding.moviestate.base.BaseFragment;
 import com.dicoding.moviestate.entity.MovieItem;
+import com.dicoding.moviestate.entity.Screen;
 import com.dicoding.moviestate.movie.adapter.MovieAdapter;
 import com.dicoding.moviestate.network.MovieDataSources;
 
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MovieTopRatedFragment extends BaseFragment<MovieTopRatedViewModel> {
+public class MovieTopRatedFragment extends BaseFragment {
 
     private MovieAdapter movieAdapter;
 
@@ -49,7 +50,6 @@ public class MovieTopRatedFragment extends BaseFragment<MovieTopRatedViewModel> 
         movieList.setAdapter(movieAdapter);
 
         movieViewModel.observeMovie.observe(this, movieObservable);
-        movieViewModel.getMovieByUrl(MovieDataSources.URL_TOP_RATED);
     }
 
     Observer<List<MovieItem>> movieObservable = new Observer<List<MovieItem>>() {
@@ -60,7 +60,7 @@ public class MovieTopRatedFragment extends BaseFragment<MovieTopRatedViewModel> 
     };
 
     @Override
-    public Class<MovieTopRatedViewModel> provideViewModelClass() {
-        return MovieTopRatedViewModel.class;
+    public Screen provideScreen() {
+        return Screen.TOP_RATED;
     }
 }
