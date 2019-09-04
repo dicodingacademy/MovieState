@@ -1,24 +1,26 @@
 package com.dicoding.moviestate.base;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 
+import com.dicoding.moviestate.entity.Screen;
 import com.dicoding.moviestate.network.MovieDataSources;
 
-public abstract class BaseFragment<T extends ViewModel> extends Fragment {
+public abstract class BaseFragment extends Fragment {
 
-    public T movieViewModel;
+    public BaseMovieViewModel movieViewModel;
 
-    public abstract Class<T> provideViewModelClass();
+    public abstract Screen provideScreen();
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        movieViewModel = ViewModelProviders.of(this).get(provideViewModelClass());
+        movieViewModel = new BaseMovieViewModel.Factory()
+                .setDataSources(new MovieDataSources())
+                .setOwners(this)
+                .setScreen(provideScreen())
+                .build();
     }
 }
